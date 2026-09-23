@@ -1,1 +1,0 @@
-﻿alert('PLEASE TAP OK');
