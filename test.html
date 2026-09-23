@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculator App Test Runner</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #0f172a; color: #f8fafc; }
+    .pass { color: #10b981; }
+    .fail { color: #ef4444; }
+    .summary { font-size: 1.25rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #334155; }
+  </style>
+</head>
+<body>
+  <h1>Calculator Unit Test Suite</h1>
+  <div id="output">Running tests...</div>
+
+  <script type="module">
+    import { runAllTests } from './src/tests/testRunner.js';
+    import './src/tests/calculator.test.js';
+
+    const output = document.getElementById('output');
+    runAllTests().then(summary => {
+      let html = '';
+      summary.results.forEach(r => {
+        const statusClass = r.status === 'pass' ? 'pass' : 'fail';
+        const symbol = r.status === 'pass' ? '✓' : '✗';
+        html += `<div class="${statusClass}">${symbol} [${r.suite}] ${r.test} ${r.error ? ': ' + r.error : ''}</div>`;
+      });
+      html += `<div class="summary">Total: ${summary.total} | <span class="pass">Passed: ${summary.passed}</span> | <span class="fail">Failed: ${summary.failed}</span></div>`;
+      output.innerHTML = html;
+    });
+  </script>
+</body>
+</html>
